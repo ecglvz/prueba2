@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard del Estudiante</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido, {{ student_id }}</h1>
+        <p>A continuación se muestran tus materias y los profesores asignados.</p>
+    </header>
+
+    <section>
+        <h2>Materias</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Materia</th>
+                    <th scope="col">Profesor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Materias para grado 1 -->
+                {% if student_id == "1RHM" %}
+                    <tr><td>Lengua y Comunicación I</td><td>Alejandro Reyes López</td></tr>
+                    <tr><td>Inglés I</td><td>Rocío Patricia González Martínez</td></tr>
+                    <tr><td>Pensamiento Matemático I</td><td>José Antonio Sebastián Hernández</td></tr>
+                    <tr><td>Cultura Digital I</td><td>José Félix Morales Bustamante</td></tr>
+                    <tr><td>La Materia y sus Interacciones I</td><td>Claudia María Quiroga Montalván</td></tr>
+                    <tr><td>Humanidades I</td><td>Juana Ramos Luna</td></tr>
+                    <tr><td>Ciencias Sociales I</td><td>Alejandro Torres Páramo</td></tr>
+                    <tr><td>Recursos Socioemocionales I</td><td>L</td></tr>
+                    <tr><td>Tutorías</td><td>Norma Lorena Quinteros Carrillo</td></tr>
+                {% elif student_id == "1RH2M" %}
+                    <tr><td>Lengua y Comunicación I</td><td>Norma Elisa Ramírez Lugardo</td></tr>
+                    <tr><td>Inglés I</td><td>Rocío Patricia González Martínez</td></tr>
+                    <tr><td>Pensamiento Matemático I</td><td>José Antonio Sebastián Hernández</td></tr>
+                    <tr><td>Cultura Digital I</td><td>José Félix Morales Bustamante</td></tr>
+                    <tr><td>La Materia y sus Interacciones I</td><td>Lot Francisco Javier Basilio</td></tr>
+                    <tr><td>Humanidades I</td><td>Juana Ramos Luna</td></tr>
+                    <tr><td>Ciencias Sociales I</td><td>Alejandro Torres Páramo</td></tr>
+                    <tr><td>Recursos Socioemocionales I</td><td>L</td></tr>
+                    <tr><td>Tutorías</td><td>Aurelio Badillo Gámez</td></tr>
+                {% elif student_id == "1RH3M" %}
+                    <tr><td>Lengua y Comunicación I</td><td>Alejandro Reyes López</td></tr>
+                    <tr><td>Inglés I</td><td>Patricia Pimentel Rodríguez</td></tr>
+                    <tr><td>Pensamiento Matemático I</td><td>Edgar Chávez Rodríguez</td></tr>
+                    <tr><td>Cultura Digital I</td><td>José Félix Morales Bustamante</td></tr>
+                    <tr><td>La Materia y sus Interacciones I</td><td>Claudia María Quiroga</td></tr>
+                    <tr><td>Humanidades I</td><td>Arcelia Margarita Sarmiento Ramos</td></tr>
+                    <tr><td>Ciencias Sociales I</td><td>Alejandro Torres Páramo</td></tr>
+                    <tr><td>Recursos Socioemocionales I</td><td>L</td></tr>
+                    <tr><td>Tutorías</td><td>Rocío Patricia González Martínez</td></tr>
+                {% elif student_id == "1OM" %}
+                    <tr><td>Lengua y Comunicación I</td><td>Alejandro Reyes López</td></tr>
+                    <tr><td>Inglés I</td><td>Patricia Pimentel Rodríguez</td></tr>
+                    <tr><td>Pensamiento Matemático I</td><td>Edgar Chávez Rodríguez</td></tr>
+                    <tr><td>Cultura Digital I</td><td>Karen Yajaira Vargas Méndez</td></tr>
+                    <tr><td>La Materia y sus Interacciones I</td><td>Lot Francisco Javier Basilio</td></tr>
+                    <tr><td>Humanidades I</td><td>Juana Ramos Luna</td></tr>
+                    <tr><td>Ciencias Sociales I</td><td>Lucia Carrillo Gutiérrez</td></tr>
+                    <tr><td>Recursos Socioemocionales I</td><td>L</td></tr>
+                    <tr><td>Tutorías</td><td>Danna Guadalupe González Gutiérrez</td></tr>
+                {% elif student_id == "1O2M" %}
+                    <tr><td>Lengua y Comunicación I</td><td>Alejandro Reyes López</td></tr>
+                    <tr><td>Inglés I</td><td>Patricia Pimentel Rodríguez</td></tr>
+                    <tr><td>Pensamiento Matemático I</td><td>Edgar Chávez Rodríguez</td></tr>
+                    <tr><td>Cultura Digital I</td><td>José Félix Morales Bustamante</td></tr>
+                    <tr><td>La Materia y sus Interacciones I</td><td>Claudia María Quiroga Montalván</td></tr>
+                    <tr><td>Humanidades I</td><td>Arcelia Margarita Sarmiento Ramos</td></tr>
+                    <tr><td>Ciencias Sociales I</td><td>Lucia Carrillo Gutiérrez</td></tr>
+                    <tr><td>Recursos Socioemocionales I</td><td>Lucia Carrillo Gutiérrez</td></tr>
+                    <tr><td>Tutorías</td><td>José Félix Morales Bustamante</td></tr>
+                {% elif student_id == "1EM" %}
+                    <tr><td>Lengua y Comunicación I</td><td>Alejandro Reyes López</td></tr>
+                    <tr><td>Inglés I</td><td>Rocío Patricia González Martínez</td></tr>
+                    <tr><td>Pensamiento Matemático I</td><td>Edgar Chávez Rodríguez</td></tr>
+                    <tr><td>Cultura Digital I</td><td>Karen Yajaira Vargas Méndez</td></tr>
+                    <tr><td>La Materia y sus Interacciones I</td><td>Claudia María Quiroga Montalván</td></tr>
+                    <tr><td>Humanidades I</td><td>Juana Ramos Luna</td></tr>
+                    <tr><td>Ciencias Sociales I</td><td>Lucia Carrillo Gutiérrez</td></tr>
+                    <tr><td>Recursos Socioemocionales I</td><td>Lucia Carrillo Gutiérrez</td></tr>
+                    <tr><td>Tutorías</td><td>Edgar Chávez Rodríguez</td></tr>
+                {% elif student_id == "3RHM" %}
+                    <tr><td>Lengua y Comunicación III</td><td>Beronica Suárez Mendoza</td></tr>
+                    <tr><td>Inglés III</td><td>Arcelia Margarita Sarmiento Ramos</td></tr>
+                    <tr><td>Pensamiento Matemático III</td><td>José Antonio Sebastián Hernández</td></tr>
+                    <tr><td>Ecosistemas: Interacciones, Energía y Dinámica</td><td>Miguel Ángel Benítez 
+González</td></tr>
+                    <tr><td>Humanidades III</td><td>Horacio Monroy Castañeda</td></tr>
+                    <tr><td>Recursos Socioemocionales III</td><td>L</td></tr>
+                    <tr><td>Gestiona el Proceso de Reclutamiento, Selección y Admisión del Talento 
+Humano</td><td>Norma Lorena Quinteros Carrillo</td></tr>
+                    <tr><td>Gestiona los Procesos de Inducción y Permanencia del Talento Humano</td><td>Roxana 
+Vale Angulo</td></tr>
+                    <tr><td>Tutorías</td><td>Lucía Carrillo Gutiérrez</td></tr>
+              
+                {% endif %}
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>
+
