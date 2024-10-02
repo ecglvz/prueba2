@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Fondo blanco */
+    color: #5C2D25; /* Color vino */
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center; /* Centrar el texto del encabezado */
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5em; /* Tamaño de fuente grande para el nombre del estudiante */
+}
+
+p {
+    font-size: 1.3em; /* Aumentar el tamaño del texto de la descripción */
+}
+
+h2 {
+    font-size: 2em; /* Tamaño de fuente grande para "Materias" */
+    color: #ffffff; /* Color blanco para el título de materias */
+    margin-top: 40px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Unir bordes de las celdas */
+    margin-top: 20px;
+    font-size: 1.2em; /* Tamaño de fuente para el texto dentro de la tabla */
+}
+
+th, td {
+    border: 1px solid #5C2D25; /* Bordes en color vino */
+    padding: 15px; /* Aumentar el padding de las celdas */
+    text-align: left; /* Alinear el texto a la izquierda */
+}
+
+th {
+    background-color: #A22A2A; /* Fondo para los encabezados de la tabla */
+    color: white; /* Color del texto en los encabezados */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Fondo gris claro para filas pares */
+}
+
+tr:hover {
+    background-color: #e1e1e1; /* Cambio de fondo al pasar el mouse */
+}
+

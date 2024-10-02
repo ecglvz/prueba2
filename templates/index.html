@@ -4,113 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Educativo</title>
-    <link rel="icon" href="static/favicon.png" type="image/png">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('IMG_2834.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            /* Añadir filtro y opacidad a la imagen de fondo */
-            background-color: rgba(0, 0, 0, 0.5); /* Color de fondo oscuro 
-con opacidad */
-            background-blend-mode: darken; /* Mezclar el color oscuro con 
-la imagen de fondo */
-            filter: brightness(80%) contrast(90%); /* Ajustar el brillo y 
-el contraste */
-        }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: rgba(244, 244, 244, 0.85); /* Fondo 
-semitransparente */
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            font-size: 48px;
-            color: #8B0000; /* Vino */
-            text-align: center;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        h2 {
-            color: #8B0000; /* Vino */
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            color: #8B0000; /* Vino */
-        }
-
-        input[type="text"], input[type="password"], select, button {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        input[type="text"], input[type="password"], select {
-            background-color: #FFEBCC; /* Amarillo Arena */
-        }
-
-        button {
-            background-color: #8B0000; /* Vino */
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #A52A2A; /* Color más claro al pasar el 
-mouse */
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        #login {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        form {
-            width: 100%;
-            max-width: 400px;
-        }
-
-        #group-info li {
-            margin: 5px 0;
-        }
-    </style>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  <!-- Tu CSS original -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css') }}">  <!-- Nuevo CSS -->
 </head>
 <body>
-    <!-- Título agregado -->
-    <h1>Cbtis 237</h1>
     
     <div class="container">
         <h2>Portal Educativo</h2>
-        <!-- Contenido de la página, como el formulario de inicio de 
-sesión -->
+        <!-- Contenido de la página, como el formulario de inicio de sesión -->
     </div>
 
     <div class="container">

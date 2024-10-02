@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+# Configuración de la base de datos
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:9hT#kR2m$6LpWq!8@localhost/cbtis237'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 # Diccionarios de usuarios
 students = {
@@ -59,7 +65,9 @@ def index():
 # Ruta para el dashboard de estudiantes
 @app.route('/student_dashboard')
 def student_dashboard():
-    return render_template('student_dashboard.html')
+    student_id = request.args.get('student_id')  # Obtener el student_id de la URL
+    print(f"Student ID: {student_id}")  # Esto imprimirá el ID en la consola.
+    return render_template('student_dashboard.html', student_id=student_id)  # Pasar student_id
 
 # Ruta para el dashboard de profesores
 @app.route('/teacher_dashboard')
@@ -76,28 +84,19 @@ def login():
 
         # Validar credenciales en estudiantes
         if username in students and students[username] == password:
-            return redirect(url_for('student_dashboard'))  # Redirigir al dashboard de estudiantes
+            return redirect(url_for('student_dashboard', student_id=username))  # Redirigir al dashboard del estudiante
 
         # Validar credenciales en profesores
         elif username in teachers and teachers[username] == password:
             return redirect(url_for('teacher_dashboard'))  # Redirigir al dashboard de profesores
 
         else:
-            # Si las credenciales son incorrectas, mostrar el formulario con un mensaje de error
+            # Si las credenciales son incorrectas, mostrar el formulario con un mensaje
             error = "Credenciales incorrectas. Inténtalo de nuevo."
             return render_template('login.html', error=error)
 
     # Si es una solicitud GET, mostrar el formulario sin mensaje de error
     return render_template('login.html')
-    # Ruta para el dashboard de estudiantes
-    @app.route('/student_dashboard')
-    def student_dashboard():
-        return render_template('student_dashboard.html')
-    
-    # Ruta para el dashboard de profesores
-    @app.route('/teacher_dashboard')
-    def teacher_dashboard():
-        return render_template('teacher_dashboard.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5009)
