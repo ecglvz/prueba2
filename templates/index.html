@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Educativo</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  <!-- Tu CSS original -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css') }}">  <!-- Nuevo CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css') }}">  <!-- Nuevo CSS 
+-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">  <!-- Tu CSS 
+original -->
 </head>
 <body>
-    
+
     <div class="container">
-        <h2>Portal Educativo</h2>
-        <!-- Contenido de la página, como el formulario de inicio de sesión -->
+        <h2 class="portal-title">Portal Educativo</h2> <!-- Título elegante del portal -->
     </div>
 
     <div class="container">
+        <!-- Formulario de Inicio de Sesión -->
         <div id="login">
             <h2>Inicio de Sesión</h2>
             <form id="loginForm">
@@ -32,8 +34,7 @@
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" required>
 
-                <label for="group" class="hidden">Grupo (para 
-estudiantes)</label>
+                <label for="group" class="hidden">Grupo (para estudiantes)</label>
                 <select id="group" class="hidden">
                     <!-- Opciones de grupos se llenarán dinámicamente -->
                 </select>
@@ -42,24 +43,24 @@ estudiantes)</label>
             </form>
         </div>
 
+        <!-- Sección visible solo para estudiantes o profesores al iniciar sesión -->
         <div id="group-selection" class="hidden">
             <h2>Bienvenido, <span id="user-name"></span></h2>
-            <button id="uploadBtn" class="hidden">Subir Material</button>
-            <button id="viewMaterialsBtn">Ver Materiales</button>
+            <button id="uploadBtn" class="hidden">Subir Material</button> <!-- Solo para profesores -->
+            <button id="viewMaterialsBtn">Ver Materiales</button> <!-- Para estudiantes y profesores -->
 
             <div id="group-info">
-                <!-- Información de materias y maestros se llenará 
-dinámicamente -->
+                <!-- Información de materias y maestros se llenará dinámicamente -->
             </div>
         </div>
 
+        <!-- Sección para subir material, visible solo para profesores -->
         <div id="upload-material" class="hidden">
             <h2>Subir Material</h2>
             <form id="uploadForm">
                 <label for="subject">Materia</label>
                 <select id="subject">
-                    <!-- Opciones de materias se llenarán dinámicamente 
--->
+                    <!-- Opciones de materias se llenarán dinámicamente -->
                 </select>
 
                 <label for="file">Archivo</label>
@@ -69,6 +70,7 @@ dinámicamente -->
             </form>
         </div>
 
+        <!-- Sección para ver materiales, visible para todos -->
         <div id="view-material" class="hidden">
             <h2>Materiales Disponibles</h2>
             <ul id="material-list">
@@ -78,7 +80,48 @@ dinámicamente -->
     </div>
 
     <script>
-        const userData = {
+        document.addEventListener("DOMContentLoaded", function() {
+            // Referencias a los elementos
+            const loginForm = document.getElementById('loginForm');
+            const userSelect = document.getElementById('user');
+            const groupSelect = document.getElementById('group');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const groupSelection = document.getElementById('group-selection');
+            const userNameDisplay = document.getElementById('user-name');
+            const uploadSection = document.getElementById('upload-material');
+            const viewMaterialsSection = document.getElementById('view-material');
+
+            // Manejar el formulario de inicio de sesión
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const userType = userSelect.value;
+                const username = document.getElementById('username').value;
+
+                // Mostrar el nombre del usuario
+                userNameDisplay.textContent = username;
+
+                // Ocultar el formulario de inicio de sesión
+                loginForm.style.display = 'none';
+
+                // Mostrar la sección de grupo/material
+                groupSelection.classList.remove('hidden');
+
+                // Mostrar secciones específicas basadas en el tipo de usuario
+                if (userType === 'teacher') {
+                    // Mostrar botón de subir material solo para profesores
+                    uploadBtn.classList.remove('hidden');
+                    uploadSection.classList.remove('hidden');
+                }
+
+                // Siempre mostrar la sección de ver materiales
+                viewMaterialsSection.classList.remove('hidden');
+            });
+        });
+    </script>
+
+        
+const userData = {
             students: {
                 "1RHM": "password1",
                 "1RH2M": "password2",

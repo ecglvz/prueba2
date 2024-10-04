@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('/static/IMG_2834.jpg'); /* Ajusta la ruta aquí */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alineación centrada para el contenido */
+    height: 100vh;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo oscuro con opacidad */
+    background-blend-mode: darken; /* Mezclar el color oscuro con la imagen de fondo */
+    filter: brightness(80%) contrast(90%); /* Ajustar el brillo y el contraste */
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto; /* Centrar el cuadro */
+    padding: 20px;
+}
+
+.portal-title {
+    color: #8B0000; /* Vino */
+    text-align: center;
+    font-size: 52px; /* Tamaño de fuente para el título (aumentado) */
+    margin: 20px 0; /* Espacio arriba y abajo del título */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    font-weight: bold; /* Texto en negrita */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para efecto elegante */
+}
+
+/* Eliminar el fondo del portal educativo */
+h1 {
+    display: none; /* Ocultar el título si existe en el HTML */
+}
+
+h2 {
+    color: #8B0000; /* Vino */
+    text-align: center;
+    font-size: 36px; /* Tamaño de fuente para el encabezado */
+    margin: 20px 0; /* Espacio arriba y abajo del encabezado */
+    font-weight: bold; /* Hacer que el texto sea más grueso */
+}
+
+#login {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar los elementos dentro del cuadro de inicio de sesión */
+    background-color: rgba(244, 244, 244, 0.85); /* Fondo semitransparente para el cuadro de inicio de 
+sesión */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra alrededor del cuadro */
+    padding: 20px; /* Espacio interno */
+    margin-top: 40px; /* Espacio entre el título y el cuadro de inicio de sesión (aumentado para bajar 
+2cm) */
+}
+
+input[type="text"], input[type="password"], select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-weight: bold; /* Hacer que el texto sea más grueso */
+}
+
+button {
+    background-color: #8B0000; /* Vino */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold; /* Hacer que el texto del botón sea más grueso */
+}
+
+button:hover {
+    background-color: #A52A2A; /* Color más claro al pasar el mouse */
+}
+
