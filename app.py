@@ -1,14 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
 
-# Configuración de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:9hT#kR2m$6LpWq!8@localhost/cbtis237'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-# Diccionarios de usuarios
+# Lista fija de estudiantes (usuario: contraseña)
 students = {
     "1RHM": "password1",
     "1RH2M": "password2",
@@ -29,6 +26,7 @@ students = {
     "5EM": "password17"
 }
 
+# Lista fija de profesores (usuario: contraseña)
 teachers = {
     "Alejandro Reyes López": "pass1",
     "Rocío Patricia González Martínez": "pass2",
@@ -57,6 +55,24 @@ teachers = {
     "Gumercindo Velázquez Mejía": "pass25"
 }
 
+# Configuración de la base de datos
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:813102237ec20@localhost/cbtis237'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = 'uploads/'  # Carpeta donde se almacenarán los archivos subidos
+db = SQLAlchemy(app)
+
+# Configurar la clave secreta para manejar sesiones
+app.secret_key = '5155156L'  # Reemplaza con una clave segura
+
+# Crear modelo para Materiales y Anuncios
+class Material(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    teacher_name = db.Column(db.String(100))
+    subject = db.Column(db.String(100))
+    title = db.Column(db.String(200))
+    description = db.Column(db.Text)
+    file_path = db.Column(db.String(200))
+
 # Ruta para la página principal
 @app.route('/')
 def index():
@@ -65,39 +81,93 @@ def index():
 # Ruta para el dashboard de estudiantes
 @app.route('/student_dashboard')
 def student_dashboard():
-    student_id = request.args.get('student_id')  # Obtener el student_id de la URL
-    print(f"Student ID: {student_id}")  # Esto imprimirá el ID en la consola.
-    return render_template('student_dashboard.html', student_id=student_id)  # Pasar student_id
+    student_id = session.get('student_id')  # Recupera el student_id de la sesión
+    if not student_id:
+        return redirect(url_for('login'))
+
+    # Obtener todos los materiales y anuncios disponibles para el estudiante
+    materials = Material.query.all()
+
+    return render_template('student_dashboard.html', student_id=student_id, materials=materials)
+
+# Ruta para ver el material de una materia específica
+@app.route('/subject/<subject_name>')
+def view_subject(subject_name):
+    # Filtrar materiales por materia
+    materials = Material.query.filter_by(subject=subject_name).all()
+    return render_template('subject_view.html', subject=subject_name, materials=materials)
 
 # Ruta para el dashboard de profesores
 @app.route('/teacher_dashboard')
 def teacher_dashboard():
-    return render_template('teacher_dashboard.html')
+    teacher_name = session.get('teacher_name')  # Recupera el nombre del profesor de la sesión
+    if not teacher_name:
+        return redirect(url_for('login'))
+
+    return render_template('teacher_dashboard.html', teacher_name=teacher_name)
+
+# Ruta para subir materiales o anuncios (solo profesores)
+@app.route('/upload_material', methods=['GET', 'POST'])
+def upload_material():
+    if 'teacher_name' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        subject = request.form['subject']
+        title = request.form['title']
+        description = request.form['description']
+        file = request.files['file']
+        teacher_name = session['teacher_name']
+
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+
+            # Guardar el material en la base de datos
+            new_material = Material(
+                teacher_name=teacher_name,
+                subject=subject,
+                title=title,
+                description=description,
+                file_path=file_path
+            )
+            db.session.add(new_material)
+            db.session.commit()
+
+            flash("Material subido exitosamente.")
+            return redirect(url_for('teacher_dashboard'))
+
+    return render_template('upload_material.html')
 
 # Ruta para el login (manejando GET y POST)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        # Obtener los datos del formulario de inicio de sesión
-        username = request.form['username']
-        password = request.form['password']
-
-        # Validar credenciales en estudiantes
-        if username in students and students[username] == password:
-            return redirect(url_for('student_dashboard', student_id=username))  # Redirigir al dashboard del estudiante
-
-        # Validar credenciales en profesores
-        elif username in teachers and teachers[username] == password:
-            return redirect(url_for('teacher_dashboard'))  # Redirigir al dashboard de profesores
-
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user_type = request.form.get('user')
+    
+        if user_type == "student" and username in students and students[username] == password:
+            session['student_id'] = username
+            return redirect(url_for('student_dashboard'))
+        elif user_type == "teacher" and username in teachers and teachers[username] == password:
+            session['teacher_name'] = username
+            return redirect(url_for('teacher_dashboard'))
         else:
-            # Si las credenciales son incorrectas, mostrar el formulario con un mensaje
             error = "Credenciales incorrectas. Inténtalo de nuevo."
             return render_template('login.html', error=error)
 
-    # Si es una solicitud GET, mostrar el formulario sin mensaje de error
     return render_template('login.html')
 
+# Ruta para cerrar sesión
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+        
 if __name__ == '__main__':
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
     app.run(debug=True, host='0.0.0.0', port=5009)
 

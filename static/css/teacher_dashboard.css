@@ -1,0 +1,78 @@
+/* teacher_dashboard.css */
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Blanco de fondo */
+    color: #800000; /* Vino rojo para el texto */
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9; /* Fondo claro para el contenido */
+}
+
+/* Encabezado */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #800000; /* Vino rojo para el encabezado */
+    color: #ffffff; /* Texto blanco en el encabezado */
+    border-radius: 8px 8px 0 0;
+}
+
+/* Botones */
+button {
+    background-color: #800000; /* Vino rojo */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #a00000; /* Vino rojo más claro en hover */
+}
+
+/* Enlaces */
+a {
+    color: #800000; /* Vino rojo para enlaces */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline; /* Subrayado en hover */
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #800000; /* Borde en vino rojo */
+    text-align: left;
+}
+
+th {
+    background-color: #800000; /* Fondo de encabezado de tabla en vino rojo */
+    color: #ffffff; /* Texto blanco en encabezado de tabla */
+}
+

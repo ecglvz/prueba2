@@ -5,57 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Educativo</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css') }}">  <!-- Nuevo CSS 
--->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">  <!-- Tu CSS 
-original -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portal.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
 
     <div class="container">
-        <h2 class="portal-title">Portal Educativo</h2> <!-- Título elegante del portal -->
+        <h2 class="portal-title">Portal Educativo</h2>
     </div>
 
     <div class="container">
-        <!-- Formulario de Inicio de Sesión -->
+        <!-- Si el usuario no ha iniciado sesión, mostrar solo el formulario de inicio de sesión -->
+        {% if 'usuario' not in session %}
         <div id="login">
             <h2>Inicio de Sesión</h2>
-            <form id="loginForm">
+            <form id="loginForm" action="{{ url_for('login') }}" method="post">
                 <label for="user">Tipo de Usuario</label>
-                <select id="user" required>
+                <select id="user" name="user" required>
                     <option value="">Selecciona</option>
                     <option value="student">Estudiante</option>
                     <option value="teacher">Profesor</option>
                 </select>
 
                 <label for="username">Nombre de Usuario</label>
-                <input type="text" id="username" required>
+                <input type="text" id="username" name="username" required>
 
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" required>
-
-                <label for="group" class="hidden">Grupo (para estudiantes)</label>
-                <select id="group" class="hidden">
-                    <!-- Opciones de grupos se llenarán dinámicamente -->
-                </select>
+                <input type="password" id="password" name="password" required>
 
                 <button type="submit">Iniciar Sesión</button>
             </form>
         </div>
+        {% else %}
+        <!-- Si el usuario ha iniciado sesión, mostrar el contenido correspondiente según su rol -->
+        <div id="group-selection">
+            <h2>Bienvenido, {{ session['usuario'] }}</h2>
 
-        <!-- Sección visible solo para estudiantes o profesores al iniciar sesión -->
-        <div id="group-selection" class="hidden">
-            <h2>Bienvenido, <span id="user-name"></span></h2>
-            <button id="uploadBtn" class="hidden">Subir Material</button> <!-- Solo para profesores -->
-            <button id="viewMaterialsBtn">Ver Materiales</button> <!-- Para estudiantes y profesores -->
+            {% if session['rol'] == 'teacher' %}
+                <button id="uploadBtn">Subir Material</button>
+            {% endif %}
 
-            <div id="group-info">
-                <!-- Información de materias y maestros se llenará dinámicamente -->
-            </div>
+            <button id="viewMaterialsBtn">Ver Materiales</button>
         </div>
 
         <!-- Sección para subir material, visible solo para profesores -->
-        <div id="upload-material" class="hidden">
+        {% if session['rol'] == 'teacher' %}
+        <div id="upload-material">
             <h2>Subir Material</h2>
             <form id="uploadForm">
                 <label for="subject">Materia</label>
@@ -69,58 +64,50 @@ original -->
                 <button type="submit">Subir</button>
             </form>
         </div>
+        {% endif %}
 
         <!-- Sección para ver materiales, visible para todos -->
-        <div id="view-material" class="hidden">
+        <div id="view-material">
             <h2>Materiales Disponibles</h2>
             <ul id="material-list">
                 <!-- Lista de materiales se llenará dinámicamente -->
             </ul>
         </div>
+        {% endif %}
     </div>
+</body>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Referencias a los elementos
+ document.addEventListener("DOMContentLoaded", function() {
+            // Referencia al formulario de inicio de sesión
             const loginForm = document.getElementById('loginForm');
-            const userSelect = document.getElementById('user');
-            const groupSelect = document.getElementById('group');
-            const uploadBtn = document.getElementById('uploadBtn');
-            const groupSelection = document.getElementById('group-selection');
-            const userNameDisplay = document.getElementById('user-name');
-            const uploadSection = document.getElementById('upload-material');
-            const viewMaterialsSection = document.getElementById('view-material');
 
             // Manejar el formulario de inicio de sesión
             loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const userType = userSelect.value;
+                e.preventDefault();  // Evita el envío del formulario por defecto
+
+                // Obtener valores del formulario
+                const userType = document.getElementById('user').value;
                 const username = document.getElementById('username').value;
 
-                // Mostrar el nombre del usuario
-                userNameDisplay.textContent = username;
+                // Aquí podrías manejar la autenticación del usuario
+                // Por ejemplo, redirigir al dashboard correspondiente después de la autenticación
 
-                // Ocultar el formulario de inicio de sesión
-                loginForm.style.display = 'none';
-
-                // Mostrar la sección de grupo/material
-                groupSelection.classList.remove('hidden');
-
-                // Mostrar secciones específicas basadas en el tipo de usuario
-                if (userType === 'teacher') {
-                    // Mostrar botón de subir material solo para profesores
-                    uploadBtn.classList.remove('hidden');
-                    uploadSection.classList.remove('hidden');
+                if (userType && username) {
+                    // Simular redirección después del inicio de sesión exitoso
+                    if (userType === 'student') {
+                        window.location.href = "{{ url_for('student_dashboard') }}";
+                    } else if (userType === 'teacher') {
+                        window.location.href = "{{ url_for('teacher_dashboard') }}";
+                    }
+                } else {
+                    alert('Por favor, completa todos los campos.');
                 }
-
-                // Siempre mostrar la sección de ver materiales
-                viewMaterialsSection.classList.remove('hidden');
             });
-        });
-    </script>
+        });   
+ </script>
 
-        
+<script>        
 const userData = {
             students: {
                 "1RHM": "password1",
